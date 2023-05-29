@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "db:push": "npx dotenv -e .env.local -- prisma db push",
-    "studio": "npx dotenv -e .env.local -- prisma studio"
+    "studio": "npx dotenv -e .env.local -- prisma studio",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@prisma/client": "^4.14.1",
