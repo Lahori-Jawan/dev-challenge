@@ -1,16 +1,16 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { trpc } from "@/utils/trpc/hook";
 import { useStore } from "@/store/useStore";
 import { UserProps } from "@/store/types/user";
 import Loader from "@/components/Loader";
 import Notification from "@/components/Notification";
+import Alert from "@/components/Alert";
 
 export default function AccountPage() {
-  const state = useStore();
+  const setUser = useStore((state) => state.setUser);
   const newUser = trpc.newUser.useMutation();
   const { data } = trpc.getUsers.useQuery();
-  console.log({ data });
 
   const [profileImage, setProfileImage] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -71,9 +71,16 @@ export default function AccountPage() {
       };
 
       newUser.mutate({ ...user, password });
-      state.setUser(user);
+      setUser(user);
     }
   };
+
+  useEffect(() => {
+    setFirstName("");
+    setLastName("");
+    setEmail("");
+    setPassword("");
+  }, [newUser.isSuccess]);
 
   return (
     <>
@@ -84,6 +91,12 @@ export default function AccountPage() {
       />
       <main className="w-1/2 mx-auto mt-8">
         <h1 className="text-2xl font-bold mb-4">Account Settings</h1>
+        {newUser.isSuccess && (
+          <Alert
+            message="User data is saved successfully."
+            onClose={() => newUser.reset()}
+          />
+        )}
         <form onSubmit={handleSubmit}>
           {/* <div className="mb-4">
             <label

@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 
-const Notification: React.FC<{
+type Notification = {
   message: string | undefined;
   onClose: () => void;
-}> = ({ message, onClose }) => {
+};
+
+const Notification = ({ message, onClose }: Notification) => {
   console.log({ message });
   const [isVisible, setIsVisible] = useState(false);
 
