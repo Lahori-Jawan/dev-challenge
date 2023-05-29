@@ -17,7 +17,7 @@ model Shop {
   shop_url         String
   created_at       DateTime  @default(now())
   updated_at       DateTime  @updatedAt
-  membership_level Member?   @default(GUEST)
+  // membership_level Member?   @default(GUEST)
   users            User[]
   Session          Session[]
 }
@@ -40,15 +40,15 @@ model User {
   password    String
   created_at  DateTime @default(now())
   updated_at  DateTime @updatedAt
-  access_token     String?
-  access_scopes    String?
+  // access_token     String?
+  // access_scopes    String?
   shop_id     Int?
   shop        Shop?    @relation(fields: [shop_id], references: [id])
 
   @@index([shop_id])
 }
 
-enum Member {
-  GUEST
-  ADMIN
-}
+// enum Member {
+//   GUEST
+//   ADMIN
+// }
